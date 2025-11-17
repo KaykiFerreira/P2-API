@@ -1,4 +1,4 @@
-package application.matricula;
+package application.curso;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,18 +11,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/matriculas")
-public class MatriculaController {
-    @Autowired private MatriculaService service;
+@RequestMapping("/cursos")
+public class CursoController {
+    @Autowired private CursoService service;
 
     @GetMapping
-    public Iterable<MatriculaDTO> getAll() { return service.getAll(); }
+    public Iterable<CursoDTO> getAll() { return service.getAll(); }
     @GetMapping("/{id}")
-    public MatriculaDTO getOne(@PathVariable long id) { return service.getOne(id); }
+    public CursoDTO getOne(@PathVariable long id) { return service.getOne(id); }
     @PostMapping
-    public MatriculaDTO insert(@RequestBody MatriculaInsertDTO dados) { return service.insert(dados); }
+    public CursoDTO insert(@RequestBody CursoInsertDTO dados) { return service.insert(dados); }
     @PutMapping("/{id}")
-    public MatriculaDTO update(@PathVariable long id, @RequestBody MatriculaInsertDTO dados) {
+    public CursoDTO update(@PathVariable long id, @RequestBody CursoInsertDTO dados) {
         return service.update(id, dados);
     }
     @DeleteMapping("/{id}")

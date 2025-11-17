@@ -12,15 +12,14 @@ import java.time.LocalDate;
 @Table(name = "matriculas")
 @Getter @Setter @NoArgsConstructor
 public class Matricula {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    
     private LocalDate dataMatricula;
     private String status;
 
     @ManyToOne
-    @JoinColumn(name = "aluno_id") // Conforme diagrama PDF [cite: 75]
+    @JoinColumn(name = "aluno_id")
     private Aluno aluno;
 
     @ManyToOne

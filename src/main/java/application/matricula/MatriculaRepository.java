@@ -1,5 +1,7 @@
 package application.matricula;
 
-public class MatriculaRepository {
-    
+import org.springframework.data.jpa.repository.JpaRepository;
+
+interface MatriculaRepository extends JpaRepository<Matricula, Long> {
+
 }

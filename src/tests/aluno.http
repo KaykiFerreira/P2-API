@@ -1,0 +1,3 @@
+@url = https://zany-couscous-7gj7v444xx9cp967-8080.app.github.dev
+
+GET {{url}}/alunos

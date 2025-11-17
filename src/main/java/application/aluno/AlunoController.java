@@ -1,46 +1,32 @@
 package application.aluno;
 
-import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/alunos")
 public class AlunoController {
-    @Autowired
-    private AlunoRepository repo; // Para simplificar, usando repo direto, mas Service é recomendado
-    @PostMapping
-    @Operation(summary = "Cadastrar Aluno")
-    public AlunoDTO insert(@RequestBody AlunoInsertDTO dados) {
-        return new AlunoDTO(repo.save(new Aluno(dados)));
-    }
-
-    @PutMapping("/{id}")
-    public AlunoDTO update(@PathVariable Long id, @RequestBody AlunoInsertDTO dados) {
-        var opt = repo.findById(id);
-        if (opt.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-        Aluno a = opt.get();
-        a.setNome(dados.nome());
-        a.setEmail(dados.email());
-        a.setTelefone(dados.telefone());
-        repo.save(a);
-        return new AlunoDTO(a);
-    }
+    @Autowired private AlunoService service;
 
     @GetMapping
-    @Operation(summary = "Listar Alunos")
-    public Iterable<AlunoDTO> getAll() {
-        return repo.findAll().stream().map(AlunoDTO::new).toList();
+    public Iterable<AlunoDTO> getAll() { return service.getAll(); }
+    @GetMapping("/{id}")
+    public AlunoDTO getOne(@PathVariable long id) { return service.getOne(id); }
+    @PostMapping
+    public AlunoDTO insert(@RequestBody AlunoInsertDTO dados) { return service.insert(dados); }
+    @PutMapping("/{id}")
+    public AlunoDTO update(@PathVariable long id, @RequestBody AlunoInsertDTO dados) {
+        return service.update(id, dados);
     }
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        if (!repo.existsById(id)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-        repo.deleteById(id);
+    public void delete(@PathVariable long id) {
+        service.delete(id);
     }
 }
